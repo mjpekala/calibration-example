@@ -47,7 +47,6 @@ end
 %% Create and evaluate SVM
 
 % Train SVM.
-% The value for c was determined by a previous hyperparameter search. 
 [csvm, f_calibrate, svm] = train_and_calibrate(train.X, train.y, 'c', 1e-2, 'Cost', C);
 
 

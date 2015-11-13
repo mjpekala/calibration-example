@@ -17,11 +17,20 @@ p = inputParser;
 p.addRequired('X', @isnumeric);
 p.addRequired('y', @isnumeric);
 p.addParameter('c', NaN);
+p.addParameter('cost', NaN);
 p.addParameter('verbose', 1);
 p.parse(X, y, varargin{:});
 p = p.Results;
 
 assert(size(X,1) == length(y));
+
+
+if isnan(p.cost)
+    % Use Matlab's default of a matrix c_{i,j} = ~ \delta_{i,j}
+    n = length(unique(y));
+    p.cost = ones(n);
+    p.cost(n:(n+1):n*n) = 0;
+end
 
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -38,7 +47,7 @@ if ~isfinite(p.c)
     
     for ii = 1:length(cVals)
         tic
-        svm = fitcsvm(X, y, 'Standardize', true, 'BoxConstraint', cVals(ii));
+        svm = fitcsvm(X, y, 'Standardize', true, 'BoxConstraint', cVals(ii), 'Cost', p.cost);
         csvm = crossval(svm);
         losses(ii) = kfoldLoss(csvm, 'Mode', 'average');
         runtime = toc;
@@ -63,7 +72,7 @@ if p.verbose
 end
 
 tic
-svm = fitcsvm(X, y, 'Standardize', true, 'BoxConstraint', p.c);
+svm = fitcsvm(X, y, 'Standardize', true, 'BoxConstraint', p.c, 'Cost', p.cost);
 runtime = toc;
 
 if p.verbose

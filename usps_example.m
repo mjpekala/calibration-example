@@ -26,9 +26,9 @@ train.y = double(ismember(train.y, target));
 test.y = double(ismember(test.y, target));
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-% rebalance classes
+% Address class asymmetry
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if 1
+if 0
     idx = rebalance(train.y, 900);
     train.X = train.X(idx,:);
     train.y = train.y(idx);
@@ -36,6 +36,11 @@ if 1
     idx = rebalance(test.y);
     test.X = test.X(idx,:);
     test.y = test.y(idx);
+    
+    C = [0 1 ; 1 0];
+else
+    C = [0  1  ;
+         sum(train.y==0) / sum(train.y==1)  0]; 
 end
 
 
@@ -43,7 +48,7 @@ end
 
 % Train SVM.
 % The value for c was determined by a previous hyperparameter search. 
-[csvm, f_calibrate, svm] = train_and_calibrate(train.X, train.y, 'c', 1e-2);
+[csvm, f_calibrate, svm] = train_and_calibrate(train.X, train.y, 'c', 1e-2, 'Cost', C);
 
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,7 +59,7 @@ end
 
 [test.yHat, test.prob] = predict(csvm, test.X);
 [~, test.rawProb] = predict(svm, test.X);
-
+confusionmat(test.y, test.yHat)
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Show some reliability diagrams

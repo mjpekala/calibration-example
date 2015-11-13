@@ -47,7 +47,8 @@ end
 %% Create and evaluate SVM
 
 % Train SVM.
-[csvm, f_calibrate, svm] = train_and_calibrate(train.X, train.y, 'c', 1e-2, 'Cost', C);
+%[csvm, f_calibrate, svm] = train_and_calibrate(train.X, train.y, 'Cost', C);
+[csvm, f_calibrate, svm] = train_and_calibrate(train.X, train.y, 'Cost', C, 'c', 1e-2);
 
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,30 +64,22 @@ confusionmat(test.y, test.yHat)
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Show some reliability diagrams
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-a = min(train.rawProb(:,2));  b = max(train.rawProb(:,2));
-xv = linspace(a, b, 100);    % space of raw scores
-xn = (xv - a) / (b-a);       % normalized space of raw scores
-
 % Show raw (i.e. not yet calibrated) scores along with 
 % the calibrating sigmoid.
-plot_reliability_diagram(train.rawProb(:,2), train.y);
-hold on
-plot(xn, f_calibrate(xv));
-hold off;
-title('Reliability Diagram : Raw Train Scores');
+plot_reliability_diagram(train.rawProb(:,2), train.y, ...
+                         'title', 'Reliability Diagram : Raw Train Scores', ...
+                         'f_calibrate', f_calibrate);
 
 % The result of calibrating the training data.  This isn't
 % particularly meaningful since this is training data - just for show.
-plot_reliability_diagram(train.prob(:,2), train.y);
-title('Reliability Diagram : Calibrated Train Scores');
+plot_reliability_diagram(train.prob(:,2), train.y, ...
+                         'title', 'Reliability Diagram : Calibrated Train Scores');
 
 % Same diagrams, but for test data.
-plot_reliability_diagram(test.rawProb(:,2), test.y);
-hold on
-plot(xn, f_calibrate(xv));
-hold off;
-title('Reliability Diagram : Raw Test Scores');
+plot_reliability_diagram(test.rawProb(:,2), test.y, ...
+                         'title', 'Reliability Diagram : Raw Test Scores', ...
+                         'f_calibrate', f_calibrate);
 
-plot_reliability_diagram(test.prob(:,2), test.y);
-title('Reliability Diagram : Calibrated Test Scores');
+plot_reliability_diagram(test.prob(:,2), test.y, ...
+                         'title', 'Reliability Diagram : Calibrated Test Scores');
+                         

@@ -19,4 +19,5 @@ In matlab, run the toplevel script:
 - Platt "Probabilistic outputs for support vector machines and comparison to regularized likelihood methods," 1999.
 - Zadrozny and Elkan "Transforming classifier scores into accurate multiclass probability estimates," 2002.
 - Niculescu-Mizil and Caruana "Predicting good probabilities with supervised learning," 2005.
+- Tight subplot Matlab [script](http://www.mathworks.com/matlabcentral/fileexchange/27991-tight-subplot)
 

@@ -23,10 +23,11 @@ axes(ha(1));
 hist(s);
 p1 = get(gca, 'Position');
 set(gca, 'Position', [p1(1) frac+.02  p1(3)  (1 - frac - .05)]);
-set(gca, 'XTick', [], 'YTick', []);
+set(gca, 'XTick', []);
 %set(gca, 'view', [90 -90]);
 
 if length(p.title), title(p.title); end
+
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % The main part of the reliability diagram

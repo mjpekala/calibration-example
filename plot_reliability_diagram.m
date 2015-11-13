@@ -8,3 +8,6 @@ for ii = 1:length(bins)
     text(bins(ii)+.025, empProb(ii), num2str(cnt(ii)));
 end
 
+xlabel('normalized classifier score');
+ylabel('empirical probability');
+

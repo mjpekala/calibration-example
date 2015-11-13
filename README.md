@@ -16,6 +16,6 @@ In matlab, run the toplevel script:
 ```		
 
 ### References
-o Platt "Probabilistic outputs for support vector machines and comparison to regularized likelihood methods"
-o Niculescu-Mizil, Caruana "Predicting good probabilities with supervised learning"
+- Platt "Probabilistic outputs for support vector machines and comparison to regularized likelihood methods"
+- Niculescu-Mizil, Caruana "Predicting good probabilities with supervised learning"
 

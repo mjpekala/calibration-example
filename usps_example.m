@@ -28,7 +28,7 @@ test.y = double(ismember(test.y, target));
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % Address class asymmetry
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-if 0
+if 1
     idx = rebalance(train.y, 900);
     train.X = train.X(idx,:);
     train.y = train.y(idx);

@@ -41,7 +41,7 @@ for ii = 1:length(bins)
     text(bins(ii)+offset, empProb(ii), num2str(cnt(ii)));
 end
 xlabel('scaled classifier score');
-ylabel('empirical probability');
+ylabel('fraction of positives');
 if length(p.title), title(p.title); end
 
 p0 = get(gca, 'Position');

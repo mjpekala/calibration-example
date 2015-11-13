@@ -11,14 +11,27 @@ p = p.Results;
 
 [bins, empProb, cnt] = reliability_diagram(s,y);
 
-figure('Position', [100 100 600 400]);
-ha = tight_subplot(1, 2, [.05 .05], .08, .08);
+figure('Position', [100 100 500 600]);
+ha = tight_subplot(2, 1, [.05 .05], .08, .08);
 frac = .75;
+
+
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+% Show a histogram of scores.
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+axes(ha(1));
+hist(s);
+p1 = get(gca, 'Position');
+set(gca, 'Position', [p1(1) frac+.02  p1(3)  (1 - frac - .05)]);
+set(gca, 'XTick', [], 'YTick', []);
+%set(gca, 'view', [90 -90]);
+
+if length(p.title), title(p.title); end
 
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 % The main part of the reliability diagram
 %~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-axes(ha(1));
+axes(ha(2));
 % draw the points that comprise the reliability diagram
 plot(0:.1:1, 0:.1:1, '--k', bins, empProb, 'bo');
 % optionally also draw the calibration function
@@ -42,16 +55,8 @@ for ii = 1:length(bins)
 end
 xlabel('scaled classifier score');
 ylabel('fraction of positives');
-if length(p.title), title(p.title); end
 
 p0 = get(gca, 'Position');
-set(gca, 'Position', [p0(1) p0(2) frac-p0(1) p0(4)]);
+set(gca, 'Position', [p0(1) p0(2) p0(3)  (frac-.02 - p0(2))]);
 
 
-% Show a histogram of normalized scores.
-axes(ha(2));
-hist(empProb);
-p1 = get(gca, 'Position');
-set(gca, 'Position', [frac+.01 p1(2)  (1 - frac - .03)  p1(4)]);
-set(gca, 'XTick', [], 'YTick', []);
-set(gca, 'view', [90 -90]);

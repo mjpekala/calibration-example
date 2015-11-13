@@ -1,6 +1,6 @@
 function [bins, empProb, cnt] = reliability_diagram(s, y, varargin)
-% RELIABILITY_DIAGRAM  Plots a reliability diagram for a binary 
-%                      classification problem.
+% RELIABILITY_DIAGRAM  Generates a reliability diagram for binary 
+%                      classification problems.
 %
 %   reliability_diagram(s, y)
 %       s :=  (nx1) vector of binary classifier scores; each s_i \in [a,b]

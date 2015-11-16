@@ -37,7 +37,7 @@ if 1
     test.X = test.X(idx,:);
     test.y = test.y(idx);
     
-    C = [0 1 ; 1 0];
+    C = [];
 else
     C = [0  1  ;
          sum(train.y==0) / sum(train.y==1)  0]; 

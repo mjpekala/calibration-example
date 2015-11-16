@@ -17,7 +17,7 @@ p = inputParser;
 p.addRequired('X', @isnumeric);
 p.addRequired('y', @isnumeric);
 p.addParameter('c', NaN);
-p.addParameter('cost', NaN);
+p.addParameter('cost', []);
 p.addParameter('verbose', 1);
 p.parse(X, y, varargin{:});
 p = p.Results;
@@ -25,11 +25,11 @@ p = p.Results;
 assert(size(X,1) == length(y));
 
 
-if isnan(p.cost)
+if isempty(p.cost)
     % Use Matlab's default of a matrix c_{i,j} = ~ \delta_{i,j}
     n = length(unique(y));
     p.cost = ones(n);
-    p.cost(n:(n+1):n*n) = 0;
+    p.cost(1:(n+1):n*n) = 0;
 end
 
 
